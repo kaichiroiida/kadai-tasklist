@@ -1,5 +1,8 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :require_user_logged_in
+  before_action :correct_user, only: [:destroy]
+  
   def index
     @tasks = Task.order(created_at: :desc).page(params[:page]).per(12)
   end
@@ -43,7 +46,7 @@ class TasksController < ApplicationController
     flash[:success] = 'Task は正常に削除されました'
     redirect_to tasks_url
   end
-end
+
 
   private
 
@@ -54,3 +57,14 @@ end
   def task_params
     params.require(:task).permit(:content, :status)
   end
+  def task_params
+    params.require(:task).permit(:content)
+  end
+
+  def correct_user
+    @task = current_user.tasks.find_by(id: params[:id])
+    unless @task
+      redirect_to root_path
+    end
+  end
+end
