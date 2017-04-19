@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show]
+  begore_action :signed_in_user, only: [:edit, :update]
   before_action :correct_user, only: [:edit, :show, :update]
   def index
     @users = User.all.page(params[:page])
