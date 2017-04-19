@@ -12,4 +12,11 @@
 
         <%= f.submit 'タスク編集', class: 'btn btn-primary btn-block' %>
 <% end %>
+<% else %>
+  <div class="center jumbotron">
+    <div class="text-center">
+      <h1>Welcome to the tasks</h1>
+      <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
+    </div>
+  </div>
 <% end %>
