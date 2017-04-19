@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show]
-  begore_action :signed_in_user, only: [:edit, :update]
+  before_action :signed_in_user, only: [:edit, :update]
   before_action :correct_user, only: [:edit, :show, :update]
   def index
     @users = User.all.page(params[:page])
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   
   def correct_user
     user = User.find(params[:id])
-    if current_user != user
+    if current_user.id != user.id
       redirect_to root_path
     end
   end
